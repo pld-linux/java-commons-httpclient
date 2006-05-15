@@ -1,4 +1,4 @@
-%define short_name httpclient
+%define	short_name	httpclient
 Summary:	Jakarta Commons HTTPClient Package
 Name:		jakarta-commons-%{short_name}
 Version:	2.0.2
@@ -36,14 +36,14 @@ HTTP-aware client applications such as web browsers, web service
 clients, or systems that leverage or extend the HTTP protocol for
 distributed communication.
 
-%package        javadoc
+%package javadoc
 Summary:	Javadoc for %{name}
 Group:		Documentation
 
 %description    javadoc
 %{summary}
 
-%package        demo
+%package demo
 Summary:	Demos for %{name}
 Group:		Development
 Requires:	%{name} = %{epoch}:%{version}-%{release}
@@ -51,7 +51,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 %description    demo
 %{summary}
 
-%package        manual
+%package manual
 Summary:	Manual for %{name}
 Group:		Documentation
 
