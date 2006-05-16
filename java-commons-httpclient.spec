@@ -1,5 +1,6 @@
 %define	short_name	httpclient
 Summary:	Jakarta Commons HTTPClient Package
+Summary(pl):	Pakiet Jakarta Commons HTTPClient
 Name:		jakarta-commons-%{short_name}
 Version:	2.0.2
 Release:	0.1
@@ -36,27 +37,58 @@ HTTP-aware client applications such as web browsers, web service
 clients, or systems that leverage or extend the HTTP protocol for
 distributed communication.
 
+%description -l pl
+Protokó³ przesy³ania hypertekstu (HTTP - Hyper-Text Transfer Protocol)
+jest prawdopodobnie najbardziej znacz±cym z u¿ywanych obecnie
+protoko³ów w Internecie. Us³ugi WWW, zastosowania sieciowe i rozwój
+us³ug sieciowych nadal rozszerza rolê protoko³u HTTP poza przegl±darki
+obs³ugiwane przez u¿ytkownika i zwiêksza liczbê aplikacji mog±cych
+potrzebowaæ obs³ugi HTTP. Mimo ¿e pakiet java.net udostêpnia
+podstawow± obs³ugê dostêpu do zasobów poprzez HTTP, nie dostarcza
+pe³nej elastyczno¶ci czy funkcjonalno¶ci potrzebnej wielu aplikacjom.
+Komponent Jakarta Commons HTTP Client stara siê wype³niæ tê lukê
+dostarczaj±c wydajny, aktualny i bogaty w mo¿liwo¶ci pakiet
+implementuj±cy klienck± stronê najnowszych standardów i rekomendacji
+HTTP. Zaprojektowany do rozszerzania, a jednocze¶nie dostarczaj±cy
+bogat± obs³ugê podstawowego protoko³u HTTP, komponent HTTP Client mo¿e
+byæ interesuj±cy dla ka¿dego tworz±cego aplikacje klienckie
+obs³uguj±ce HTTP, takie jak przegl±darki WWW, klientów us³ug WWW czy
+systemy wykorzystuj±ce lub rozszerzaj±ce protokó³ HTTP do komunikacji
+rozproszonej.
+
 %package javadoc
 Summary:	Javadoc for %{name}
+Summary(pl):	Dokumentacja javadoc dla pakietu %{name}
 Group:		Documentation
 
-%description    javadoc
-%{summary}
+%description javadoc
+Javadoc for %{name}.
+
+%description javadoc -l pl
+Dokumentacja javadoc dla pakietu %{name}.
 
 %package demo
 Summary:	Demos for %{name}
+Summary(pl):	Programy demonstracyjne dla pakietu %{name}
 Group:		Development
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
-%description    demo
-%{summary}
+%description demo
+Demos for %{name}.
+
+%description demo -l pl
+Programy demonstracyjne dla pakietu %{name}.
 
 %package manual
 Summary:	Manual for %{name}
+Summary(pl):	Podrêcznik dla pakietu %{name}
 Group:		Documentation
 
-%description    manual
-%{summary}
+%description manual
+Manual for %{name}.
+
+%description manual -l pl
+Podrêcznik dla pakietu %{name}.
 
 %prep
 %setup -q -n commons-httpclient-%{version}
@@ -66,10 +98,10 @@ rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
 %build
 export CLASSPATH=%(build-classpath jsse jce junit jakarta-commons-logging)
 ant \
-  -Dbuild.sysclasspath=first \
-  -Djavadoc.j2sdk.link=%{_javadocdir}/java \
-  -Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
-  dist test-nohost
+	-Dbuild.sysclasspath=first \
+	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
+	-Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
+	dist test-nohost
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -78,8 +110,14 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_javadir}
 cp -p dist/commons-%{short_name}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|jakarta-||g"`; done)
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+cd $RPM_BUILD_ROOT%{_javadir}
+for jar in *-%{version}.jar; do
+	ln -sf ${jar} `echo $jar| sed "s|jakarta-||g"`
+done
+for jar in *-%{version}.jar; do
+	ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`
+done
+cd -
 
 # javadoc
 install -d $RPM_BUILD_ROOT%{_javadocdir}
