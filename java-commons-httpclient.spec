@@ -8,7 +8,7 @@ License:	Apache Software License
 Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-src.tar.gz
 Group:		Development/Languages/Java
 URL:		http://jakarta.apache.org/commons/httpclient/
-BuildRequires:	jakarta-ant
+BuildRequires:	ant
 BuildRequires:	jakarta-commons-logging >= 1.0.3
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jsse >= 1.0.3.01
