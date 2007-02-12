@@ -1,6 +1,6 @@
 %define	short_name	httpclient
 Summary:	Jakarta Commons HTTPClient Package
-Summary(pl.UTF-8):   Pakiet Jakarta Commons HTTPClient
+Summary(pl.UTF-8):	Pakiet Jakarta Commons HTTPClient
 Name:		jakarta-commons-%{short_name}
 Version:	2.0.2
 Release:	0.1
@@ -58,7 +58,7 @@ rozproszonej.
 
 %package javadoc
 Summary:	Javadoc for %{name}
-Summary(pl.UTF-8):   Dokumentacja javadoc dla pakietu %{name}
+Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu %{name}
 Group:		Documentation
 
 %description javadoc
@@ -69,7 +69,7 @@ Dokumentacja javadoc dla pakietu %{name}.
 
 %package demo
 Summary:	Demos for %{name}
-Summary(pl.UTF-8):   Programy demonstracyjne dla pakietu %{name}
+Summary(pl.UTF-8):	Programy demonstracyjne dla pakietu %{name}
 Group:		Development
 Requires:	%{name} = %{version}-%{release}
 
@@ -81,7 +81,7 @@ Programy demonstracyjne dla pakietu %{name}.
 
 %package manual
 Summary:	Manual for %{name}
-Summary(pl.UTF-8):   Podręcznik dla pakietu %{name}
+Summary(pl.UTF-8):	Podręcznik dla pakietu %{name}
 Group:		Documentation
 
 %description manual
