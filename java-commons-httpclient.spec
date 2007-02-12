@@ -1,6 +1,6 @@
 %define	short_name	httpclient
 Summary:	Jakarta Commons HTTPClient Package
-Summary(pl):	Pakiet Jakarta Commons HTTPClient
+Summary(pl.UTF-8):   Pakiet Jakarta Commons HTTPClient
 Name:		jakarta-commons-%{short_name}
 Version:	2.0.2
 Release:	0.1
@@ -37,58 +37,58 @@ HTTP-aware client applications such as web browsers, web service
 clients, or systems that leverage or extend the HTTP protocol for
 distributed communication.
 
-%description -l pl
-Protokó³ przesy³ania hypertekstu (HTTP - Hyper-Text Transfer Protocol)
-jest prawdopodobnie najbardziej znacz±cym z u¿ywanych obecnie
-protoko³ów w Internecie. Us³ugi WWW, zastosowania sieciowe i rozwój
-us³ug sieciowych nadal rozszerza rolê protoko³u HTTP poza przegl±darki
-obs³ugiwane przez u¿ytkownika i zwiêksza liczbê aplikacji mog±cych
-potrzebowaæ obs³ugi HTTP. Mimo ¿e pakiet java.net udostêpnia
-podstawow± obs³ugê dostêpu do zasobów poprzez HTTP, nie dostarcza
-pe³nej elastyczno¶ci czy funkcjonalno¶ci potrzebnej wielu aplikacjom.
-Komponent Jakarta Commons HTTP Client stara siê wype³niæ tê lukê
-dostarczaj±c wydajny, aktualny i bogaty w mo¿liwo¶ci pakiet
-implementuj±cy klienck± stronê najnowszych standardów i rekomendacji
-HTTP. Zaprojektowany do rozszerzania, a jednocze¶nie dostarczaj±cy
-bogat± obs³ugê podstawowego protoko³u HTTP, komponent HTTP Client mo¿e
-byæ interesuj±cy dla ka¿dego tworz±cego aplikacje klienckie
-obs³uguj±ce HTTP, takie jak przegl±darki WWW, klientów us³ug WWW czy
-systemy wykorzystuj±ce lub rozszerzaj±ce protokó³ HTTP do komunikacji
+%description -l pl.UTF-8
+ProtokÃ³Å‚ przesyÅ‚ania hypertekstu (HTTP - Hyper-Text Transfer Protocol)
+jest prawdopodobnie najbardziej znaczÄ…cym z uÅ¼ywanych obecnie
+protokoÅ‚Ã³w w Internecie. UsÅ‚ugi WWW, zastosowania sieciowe i rozwÃ³j
+usÅ‚ug sieciowych nadal rozszerza rolÄ™ protokoÅ‚u HTTP poza przeglÄ…darki
+obsÅ‚ugiwane przez uÅ¼ytkownika i zwiÄ™ksza liczbÄ™ aplikacji mogÄ…cych
+potrzebowaÄ‡ obsÅ‚ugi HTTP. Mimo Å¼e pakiet java.net udostÄ™pnia
+podstawowÄ… obsÅ‚ugÄ™ dostÄ™pu do zasobÃ³w poprzez HTTP, nie dostarcza
+peÅ‚nej elastycznoÅ›ci czy funkcjonalnoÅ›ci potrzebnej wielu aplikacjom.
+Komponent Jakarta Commons HTTP Client stara siÄ™ wypeÅ‚niÄ‡ tÄ™ lukÄ™
+dostarczajÄ…c wydajny, aktualny i bogaty w moÅ¼liwoÅ›ci pakiet
+implementujÄ…cy klienckÄ… stronÄ™ najnowszych standardÃ³w i rekomendacji
+HTTP. Zaprojektowany do rozszerzania, a jednoczeÅ›nie dostarczajÄ…cy
+bogatÄ… obsÅ‚ugÄ™ podstawowego protokoÅ‚u HTTP, komponent HTTP Client moÅ¼e
+byÄ‡ interesujÄ…cy dla kaÅ¼dego tworzÄ…cego aplikacje klienckie
+obsÅ‚ugujÄ…ce HTTP, takie jak przeglÄ…darki WWW, klientÃ³w usÅ‚ug WWW czy
+systemy wykorzystujÄ…ce lub rozszerzajÄ…ce protokÃ³Å‚ HTTP do komunikacji
 rozproszonej.
 
 %package javadoc
 Summary:	Javadoc for %{name}
-Summary(pl):	Dokumentacja javadoc dla pakietu %{name}
+Summary(pl.UTF-8):   Dokumentacja javadoc dla pakietu %{name}
 Group:		Documentation
 
 %description javadoc
 Javadoc for %{name}.
 
-%description javadoc -l pl
+%description javadoc -l pl.UTF-8
 Dokumentacja javadoc dla pakietu %{name}.
 
 %package demo
 Summary:	Demos for %{name}
-Summary(pl):	Programy demonstracyjne dla pakietu %{name}
+Summary(pl.UTF-8):   Programy demonstracyjne dla pakietu %{name}
 Group:		Development
 Requires:	%{name} = %{version}-%{release}
 
 %description demo
 Demos for %{name}.
 
-%description demo -l pl
+%description demo -l pl.UTF-8
 Programy demonstracyjne dla pakietu %{name}.
 
 %package manual
 Summary:	Manual for %{name}
-Summary(pl):	Podrêcznik dla pakietu %{name}
+Summary(pl.UTF-8):   PodrÄ™cznik dla pakietu %{name}
 Group:		Documentation
 
 %description manual
 Manual for %{name}.
 
-%description manual -l pl
-Podrêcznik dla pakietu %{name}.
+%description manual -l pl.UTF-8
+PodrÄ™cznik dla pakietu %{name}.
 
 %prep
 %setup -q -n commons-httpclient-%{version}
