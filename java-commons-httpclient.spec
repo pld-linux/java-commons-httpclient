@@ -1,9 +1,9 @@
-%define	short_name	httpclient
+%include	/usr/lib/rpm/macros.java
 Summary:	Jakarta Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Jakarta Commons HTTPClient
-Name:		jakarta-commons-%{short_name}
+Name:		jakarta-commons-httpclient
 Version:	2.0.2
-Release:	0.1
+Release:	0.2
 License:	Apache Software License
 Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-src.tar.gz
 Group:		Development/Languages/Java
@@ -11,11 +11,14 @@ URL:		http://jakarta.apache.org/commons/httpclient/
 BuildRequires:	ant
 BuildRequires:	jakarta-commons-logging >= 1.0.3
 BuildRequires:	jce >= 1.2.2
+BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
 BuildRequires:	junit
+BuildRequires:	rpm-javaprov
+BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jakarta-commons-logging >= 1.0.3
-Provides:	commons-%{short_name}
-Obsoletes:	commons-%{short_name}
+Provides:	commons-httpclient
+Obsoletes:	commons-httpclient
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -60,6 +63,7 @@ rozproszonej.
 Summary:	Javadoc for %{name}
 Summary(pl.UTF-8):	Dokumentacja javadoc dla pakietu %{name}
 Group:		Documentation
+Requires:	jpackage-utils
 
 %description javadoc
 Javadoc for %{name}.
@@ -93,66 +97,59 @@ Podręcznik dla pakietu %{name}.
 %prep
 %setup -q -n commons-httpclient-%{version}
 mkdir lib # duh
-rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
+rm -rf docs/apidocs
+rm -v docs/*.patch docs/*.orig docs/*.rej
 
 %build
-export CLASSPATH=%(build-classpath jsse jce junit jakarta-commons-logging)
-ant \
+export CLASSPATH=%(build-classpath jre/jsse jre/jce junit commons-logging)
+export LC_ALL=en_US # sources are not US-ASCII
+%ant \
 	-Dbuild.sysclasspath=first \
 	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
 	-Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
 	dist test-nohost
 
-%install
-rm -rf $RPM_BUILD_ROOT
-
-# jars
-install -d $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/commons-%{short_name}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-cd $RPM_BUILD_ROOT%{_javadir}
-for jar in *-%{version}.jar; do
-	ln -sf ${jar} `echo $jar| sed "s|jakarta-||g"`
-done
-for jar in *-%{version}.jar; do
-	ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`
-done
-cd -
-
-# javadoc
-install -d $RPM_BUILD_ROOT%{_javadocdir}
-mv dist/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-
-# demo
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr src/examples src/contrib $RPM_BUILD_ROOT%{_datadir}/%{name}
+mv dist/docs/api apidoc
 
 # manual and docs
 mv dist/docs/USING_HTTPS.txt .
 rm -f dist/docs/{BUILDING,TESTING}.txt
-ln -s %{_javadocdir}/%{name} dist/docs/apidocs
+
+%install
+rm -rf $RPM_BUILD_ROOT
+# jars
+install -d $RPM_BUILD_ROOT%{_javadir}
+cp -a dist/commons-httpclient.jar $RPM_BUILD_ROOT%{_javadir}/commons-httpclient-%{version}.jar
+ln -s commons-httpclient-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-httpclient.jar
+
+# javadoc
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -a apidoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+
+# demo
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -pr dist/src/examples/* dist/src/contrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
+ln -sf %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
 %doc LICENSE.txt README.txt RELEASE_NOTES.txt USING_HTTPS.txt
-%{_javadir}/*
+%{_javadir}/*.jar
 
 %files javadoc
 %defattr(644,root,root,755)
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}-%{version}
+%ghost %{_javadocdir}/%{name}
 
 %files demo
 %defattr(644,root,root,755)
-%{_datadir}/%{name}
+%{_examplesdir}/%{name}-%{version}
 
 %files manual
 %defattr(644,root,root,755)
