@@ -1,16 +1,14 @@
-%define		_rc	rc4
-%define		_rel	2.1
 %include	/usr/lib/rpm/macros.java
 Summary:	Jakarta Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Jakarta Commons HTTPClient
-Name:		jakarta-commons-httpclient3
-Version:	3.0
-Release:	0.%{_rc}.%{_rel}
+Name:		jakarta-commons-httpclient
+Version:	3.1
+Release:	1
 License:	Apache Software License
-Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-%{_rc}-src.tar.gz
-# Source0-md5:	961edab7cdf9950f2a6d2243301407e3
+Source0:	http://apache.zone-h.org/jakarta/httpcomponents/commons-httpclient-3.x/source/commons-httpclient-%{version}-src.tar.gz
+# Source0-md5:	2c9b0f83ed5890af02c0df1c1776f39b
 Group:		Development/Languages/Java
-URL:		http://jakarta.apache.org/commons/httpclient/
+URL:		http://jakarta.apache.org/httpcomponents/httpclient-3.x/
 BuildRequires:	ant
 BuildRequires:	jakarta-commons-codec
 BuildRequires:	jakarta-commons-logging >= 1.0.3
@@ -19,7 +17,12 @@ BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
+%if %(locale -a | grep -q '^en_US$'; echo $?)
+BuildRequires:	glibc-localedb-all
+%endif
 Requires:	jakarta-commons-logging >= 1.0.3
+Requires:	jpackage-utils
+Obsoletes:	jakarta-commons-httpclient3
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -96,21 +99,20 @@ Manual for %{name}.
 Podręcznik dla pakietu %{name}.
 
 %prep
-%setup -q -n commons-httpclient-%{version}-%{_rc}
-mkdir lib # duh
-rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
+%setup -q -n commons-httpclient-%{version}
 
 %build
-export LC_ALL=en_US # source not in ASCII
-export CLASSPATH=$(build-classpath jsse jce junit commons-codec commons-logging)
+export LC_ALL=en_US # source code not US-ASCII
+required_jars="jsse jce junit commons-codec commons-logging"
+export CLASSPATH=$(build-classpath $required_jars)
 %ant \
 	-Dbuild.sysclasspath=first \
 	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
 	-Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
 	dist test
 
-rm -rf apidoc
 rm -f dist/docs/{BUILDING,TESTING}.txt
+rm -rf apidoc
 mv dist/docs/api apidoc
 
 %install
@@ -134,8 +136,7 @@ cp -pr src/examples/* src/contrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{versi
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
+ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
