@@ -1,25 +1,25 @@
+%define		_rc	rc4
+%define		_rel	2.1
 %include	/usr/lib/rpm/macros.java
 Summary:	Jakarta Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Jakarta Commons HTTPClient
-Name:		jakarta-commons-httpclient
-Version:	2.0.2
-Release:	0.2
+Name:		jakarta-commons-httpclient3
+Version:	3.0
+Release:	0.%{_rc}.%{_rel}
 License:	Apache Software License
-Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-src.tar.gz
-# Source0-md5:	f3ae7736fbfb559cb228291427f22c2d
+Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-%{_rc}-src.tar.gz
+# Source0-md5:	961edab7cdf9950f2a6d2243301407e3
 Group:		Development/Languages/Java
 URL:		http://jakarta.apache.org/commons/httpclient/
 BuildRequires:	ant
+BuildRequires:	jakarta-commons-codec
 BuildRequires:	jakarta-commons-logging >= 1.0.3
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
-BuildRequires:	junit
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 Requires:	jakarta-commons-logging >= 1.0.3
-Provides:	commons-httpclient
-Obsoletes:	commons-httpclient
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -96,28 +96,26 @@ Manual for %{name}.
 Podręcznik dla pakietu %{name}.
 
 %prep
-%setup -q -n commons-httpclient-%{version}
+%setup -q -n commons-httpclient-%{version}-%{_rc}
 mkdir lib # duh
-rm -rf docs/apidocs
-rm -v docs/*.patch docs/*.orig docs/*.rej
+rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
 
 %build
-export CLASSPATH=%(build-classpath jre/jsse jre/jce junit commons-logging)
-export LC_ALL=en_US # sources are not US-ASCII
+export LC_ALL=en_US # source not in ASCII
+export CLASSPATH=$(build-classpath jsse jce junit commons-codec commons-logging)
 %ant \
 	-Dbuild.sysclasspath=first \
 	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
 	-Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
-	dist test-nohost
+	dist test
 
-mv dist/docs/api apidoc
-
-# manual and docs
-mv dist/docs/USING_HTTPS.txt .
+rm -rf apidoc
 rm -f dist/docs/{BUILDING,TESTING}.txt
+mv dist/docs/api apidoc
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 # jars
 install -d $RPM_BUILD_ROOT%{_javadir}
 cp -a dist/commons-httpclient.jar $RPM_BUILD_ROOT%{_javadir}/commons-httpclient-%{version}.jar
@@ -130,17 +128,18 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 # demo
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -pr dist/src/examples/* dist/src/contrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -pr src/examples/* src/contrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-ln -sf %{name}-%{version} %{_javadocdir}/%{name}
+rm -f %{_javadocdir}/%{name}
+ln -s %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE.txt README.txt RELEASE_NOTES.txt USING_HTTPS.txt
+%doc LICENSE.txt README.txt RELEASE_NOTES.txt
 %{_javadir}/*.jar
 
 %files javadoc
