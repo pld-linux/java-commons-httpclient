@@ -6,6 +6,7 @@ Version:	2.0.2
 Release:	0.2
 License:	Apache Software License
 Source0:	http://archive.apache.org/dist/jakarta/commons/httpclient/source/commons-httpclient-%{version}-src.tar.gz
+# Source0-md5:	f3ae7736fbfb559cb228291427f22c2d
 Group:		Development/Languages/Java
 URL:		http://jakarta.apache.org/commons/httpclient/
 BuildRequires:	ant
