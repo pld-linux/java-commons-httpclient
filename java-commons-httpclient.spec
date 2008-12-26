@@ -11,7 +11,7 @@ Group:		Development/Languages/Java
 URL:		http://jakarta.apache.org/httpcomponents/httpclient-3.x/
 BuildRequires:	ant
 BuildRequires:	jakarta-commons-codec
-BuildRequires:	jakarta-commons-logging >= 1.0.3
+BuildRequires:	java-commons-logging >= 1.0.3
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
@@ -20,7 +20,7 @@ BuildRequires:	rpmbuild(macros) >= 1.300
 %if %(locale -a | grep -q '^en_US$'; echo $?)
 BuildRequires:	glibc-localedb-all
 %endif
-Requires:	jakarta-commons-logging >= 1.0.3
+Requires:	java-commons-logging >= 1.0.3
 Requires:	jpackage-utils
 Obsoletes:	jakarta-commons-httpclient3
 BuildArch:	noarch
