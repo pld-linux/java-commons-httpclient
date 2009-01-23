@@ -1,16 +1,16 @@
 %include	/usr/lib/rpm/macros.java
-Summary:	Jakarta Commons HTTPClient Package
-Summary(pl.UTF-8):	Pakiet Jakarta Commons HTTPClient
-Name:		jakarta-commons-httpclient
+Summary:	Commons HTTPClient Package
+Summary(pl.UTF-8):	Pakiet Commons HTTPClient
+Name:		java-commons-httpclient
 Version:	3.1
 Release:	1
-License:	Apache Software License
-Source0:	http://apache.zone-h.org/jakarta/httpcomponents/commons-httpclient-3.x/source/commons-httpclient-%{version}-src.tar.gz
+License:	Apache
+Source0:	http://www.apache.net.pl/httpcomponents/commons-httpclient/source/commons-httpclient-%{version}-src.tar.gz
 # Source0-md5:	2c9b0f83ed5890af02c0df1c1776f39b
 Group:		Development/Languages/Java
-URL:		http://jakarta.apache.org/httpcomponents/httpclient-3.x/
+URL:		http://hc.apache.org/httpcomponents-client/index.html
 BuildRequires:	ant
-BuildRequires:	jakarta-commons-codec
+BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-logging >= 1.0.3
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
@@ -22,6 +22,7 @@ BuildRequires:	glibc-localedb-all
 %endif
 Requires:	java-commons-logging >= 1.0.3
 Requires:	jpackage-utils
+Obsoletes:	jakarta-commons-httpclient
 Obsoletes:	jakarta-commons-httpclient3
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -34,8 +35,8 @@ continue to expand the role of the HTTP protocol beyond user-driven
 web browsers, and increase the number of applications that may require
 HTTP support. Although the java.net package provides basic support for
 accessing resources via HTTP, it doesn't provide the full flexibility
-or functionality needed by many applications. The Jakarta Commons HTTP
-Client component seeks to fill this void by providing an efficient,
+or functionality needed by many applications. The Commons HTTP Client
+component seeks to fill this void by providing an efficient,
 up-to-date, and feature-rich package implementing the client side of
 the most recent HTTP standards and recommendations. Designed for
 extension while providing robust support for the base HTTP protocol,
@@ -53,15 +54,14 @@ obsługiwane przez użytkownika i zwiększa liczbę aplikacji mogących
 potrzebować obsługi HTTP. Mimo że pakiet java.net udostępnia
 podstawową obsługę dostępu do zasobów poprzez HTTP, nie dostarcza
 pełnej elastyczności czy funkcjonalności potrzebnej wielu aplikacjom.
-Komponent Jakarta Commons HTTP Client stara się wypełnić tę lukę
-dostarczając wydajny, aktualny i bogaty w możliwości pakiet
-implementujący kliencką stronę najnowszych standardów i rekomendacji
-HTTP. Zaprojektowany do rozszerzania, a jednocześnie dostarczający
-bogatą obsługę podstawowego protokołu HTTP, komponent HTTP Client może
-być interesujący dla każdego tworzącego aplikacje klienckie
-obsługujące HTTP, takie jak przeglądarki WWW, klientów usług WWW czy
-systemy wykorzystujące lub rozszerzające protokół HTTP do komunikacji
-rozproszonej.
+Komponent Commons HTTP Client stara się wypełnić tę lukę dostarczając
+wydajny, aktualny i bogaty w możliwości pakiet implementujący kliencką
+stronę najnowszych standardów i rekomendacji HTTP. Zaprojektowany do
+rozszerzania, a jednocześnie dostarczający bogatą obsługę podstawowego
+protokołu HTTP, komponent HTTP Client może być interesujący dla
+każdego tworzącego aplikacje klienckie obsługujące HTTP, takie jak
+przeglądarki WWW, klientów usług WWW czy systemy wykorzystujące lub
+rozszerzające protokół HTTP do komunikacji rozproszonej.
 
 %package javadoc
 Summary:	Javadoc for %{name}
@@ -108,7 +108,7 @@ export CLASSPATH=$(build-classpath $required_jars)
 %ant \
 	-Dbuild.sysclasspath=first \
 	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
-	-Djavadoc.logging.link=%{_javadocdir}/jakarta-commons-logging \
+	-Djavadoc.logging.link=%{_javadocdir}/java-commons-logging \
 	dist test
 
 rm -f dist/docs/{BUILDING,TESTING}.txt
