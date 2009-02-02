@@ -7,7 +7,7 @@ Release:	1
 License:	Apache
 Source0:	http://www.apache.net.pl/httpcomponents/commons-httpclient/source/commons-httpclient-%{version}-src.tar.gz
 # Source0-md5:	2c9b0f83ed5890af02c0df1c1776f39b
-Group:		Development/Languages/Java
+Group:		Libraries/Java
 URL:		http://hc.apache.org/httpcomponents-client/index.html
 BuildRequires:	ant
 BuildRequires:	java-commons-codec
@@ -78,7 +78,7 @@ Dokumentacja javadoc dla pakietu %{name}.
 %package demo
 Summary:	Demos for %{name}
 Summary(pl.UTF-8):	Programy demonstracyjne dla pakietu %{name}
-Group:		Development
+Group:		Development/Languages/Java
 Requires:	%{name} = %{version}-%{release}
 
 %description demo
