@@ -1,9 +1,13 @@
+# TODO:
+# - do not mark -manual files as %%doc (?)
+%bcond_with	tests	# tests disabled by default sinc it requires java-sun
 %include	/usr/lib/rpm/macros.java
+%define		srcname	commons-httpclient
 Summary:	Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Commons HTTPClient
 Name:		java-commons-httpclient
 Version:	3.1
-Release:	1
+Release:	2
 License:	Apache
 Source0:	http://www.apache.net.pl/httpcomponents/commons-httpclient/source/commons-httpclient-%{version}-src.tar.gz
 # Source0-md5:	2c9b0f83ed5890af02c0df1c1776f39b
@@ -12,6 +16,7 @@ URL:		http://hc.apache.org/httpcomponents-client/index.html
 BuildRequires:	ant
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-logging >= 1.0.3
+BuildRequires:	java-gcj-compat-devel
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
@@ -103,13 +108,14 @@ Podręcznik dla pakietu %{name}.
 
 %build
 export LC_ALL=en_US # source code not US-ASCII
-required_jars="jsse jce junit commons-codec commons-logging"
+required_jars="glibj jsse jce junit commons-codec commons-logging"
 export CLASSPATH=$(build-classpath $required_jars)
-%ant \
-	-Dbuild.sysclasspath=first \
+export SHELL=/bin/sh
+
+%ant	-Dbuild.compiler=extJavac \
 	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
 	-Djavadoc.logging.link=%{_javadocdir}/java-commons-logging \
-	dist test
+	dist %{?with_tests:test}
 
 rm -f dist/docs/{BUILDING,TESTING}.txt
 rm -rf apidoc
@@ -124,9 +130,9 @@ cp -a dist/commons-httpclient.jar $RPM_BUILD_ROOT%{_javadir}/commons-httpclient-
 ln -s commons-httpclient-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/commons-httpclient.jar
 
 # javadoc
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -a apidoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+cp -a apidoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{srcname}-%{version}
+ln -s %{srcname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{srcname} # ghost symlink
 
 # demo
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -136,7 +142,7 @@ cp -pr src/examples/* src/contrib $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{versi
 rm -rf $RPM_BUILD_ROOT
 
 %post javadoc
-ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
+ln -nfs %{srcname}-%{version} %{_javadocdir}/%{srcname}
 
 %files
 %defattr(644,root,root,755)
@@ -145,8 +151,8 @@ ln -nfs %{name}-%{version} %{_javadocdir}/%{name}
 
 %files javadoc
 %defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{srcname}-%{version}
+%ghost %{_javadocdir}/%{srcname}
 
 %files demo
 %defattr(644,root,root,755)
