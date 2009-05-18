@@ -1,6 +1,12 @@
 # TODO:
 # - do not mark -manual files as %%doc (?)
 %bcond_with	tests	# tests disabled by default sinc it requires java-sun
+%if "%{pld_release}" == "ti"
+%bcond_without	java_sun	# build with gcj
+%else
+%bcond_with	java_sun	# build with java-sun
+%endif
+
 %include	/usr/lib/rpm/macros.java
 %define		srcname	commons-httpclient
 Summary:	Commons HTTPClient Package
@@ -16,10 +22,12 @@ URL:		http://hc.apache.org/httpcomponents-client/index.html
 BuildRequires:	ant
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-logging >= 1.0.3
-BuildRequires:	java-gcj-compat-devel
+%{!?with_java_sun:BuildRequires:	java-gcj-compat-devel}
+%{?with_java_sun:BuildRequires:	java-sun}
 BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
 BuildRequires:	jsse >= 1.0.3.01
+BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 %if %(locale -a | grep -q '^en_US$'; echo $?)
@@ -109,11 +117,10 @@ Podręcznik dla pakietu %{name}.
 %build
 export LC_ALL=en_US # source code not US-ASCII
 required_jars="glibj jsse jce junit commons-codec commons-logging"
-export CLASSPATH=$(build-classpath $required_jars)
-export SHELL=/bin/sh
+CLASSPATH=$(build-classpath $required_jars)
+export CLASSPATH
 
-%ant	-Dbuild.compiler=extJavac \
-	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
+%ant	-Djavadoc.j2sdk.link=%{_javadocdir}/java \
 	-Djavadoc.logging.link=%{_javadocdir}/java-commons-logging \
 	dist %{?with_tests:test}
 
