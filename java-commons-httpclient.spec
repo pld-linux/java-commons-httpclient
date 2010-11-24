@@ -7,11 +7,12 @@ Summary:	Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Commons HTTPClient
 Name:		java-commons-httpclient
 Version:	3.1
-Release:	2
+Release:	3
 License:	Apache
+Group:		Libraries/Java
 Source0:	http://www.apache.net.pl/httpcomponents/commons-httpclient/source/commons-httpclient-%{version}-src.tar.gz
 # Source0-md5:	2c9b0f83ed5890af02c0df1c1776f39b
-Group:		Libraries/Java
+Patch0:		commons-httpclient-addosgimanifest.patch
 URL:		http://hc.apache.org/httpcomponents-client/index.html
 BuildRequires:	ant
 BuildRequires:	java-commons-codec
@@ -105,6 +106,7 @@ Podręcznik dla pakietu %{name}.
 
 %prep
 %setup -q -n commons-httpclient-%{version}
+%patch0 -p1
 
 %build
 export LC_ALL=en_US # source code not US-ASCII
