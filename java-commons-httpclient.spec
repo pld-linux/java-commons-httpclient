@@ -7,7 +7,7 @@ Summary:	Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Commons HTTPClient
 Name:		java-commons-httpclient
 Version:	3.1
-Release:	3
+Release:	3.1
 License:	Apache
 Group:		Libraries/Java
 Source0:	http://www.apache.net.pl/httpcomponents/commons-httpclient/source/commons-httpclient-%{version}-src.tar.gz
@@ -18,9 +18,9 @@ BuildRequires:	ant
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-logging >= 1.0.3
 BuildRequires:	jdk
-BuildRequires:	jce >= 1.2.2
+# BuildRequires:	jce >= 1.2.2
 BuildRequires:	jpackage-utils
-BuildRequires:	jsse >= 1.0.3.01
+# BuildRequires:	jsse >= 1.0.3.01
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
 %if %(locale -a | grep -q '^en_US$'; echo $?)
