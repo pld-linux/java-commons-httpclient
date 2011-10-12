@@ -19,6 +19,7 @@ BuildRequires:	java(jce) >= 1.2.2
 BuildRequires:	java(jsse) >= 1.0.3.01
 BuildRequires:	java-commons-codec
 BuildRequires:	java-commons-logging >= 1.0.3
+BuildRequires:	java-gnu-classpath
 BuildRequires:	jdk
 BuildRequires:	jpackage-utils
 BuildRequires:	rpm-javaprov
