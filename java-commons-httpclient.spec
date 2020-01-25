@@ -1,7 +1,6 @@
 # TODO:
 # - do not mark -manual files as %%doc (?)
 %bcond_with	tests	# tests disabled by default sinc it requires java-sun
-%include	/usr/lib/rpm/macros.java
 %define		srcname	commons-httpclient
 Summary:	Commons HTTPClient Package
 Summary(pl.UTF-8):	Pakiet Commons HTTPClient
